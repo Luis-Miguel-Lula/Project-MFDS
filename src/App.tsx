@@ -6,6 +6,7 @@ import TasksPage from "./pages/TasksPage";
 import IdeasPage from "./pages/IdeasPage";
 import AutomationsPage from "./pages/AutomationsPage";
 import SettingsPage from "./pages/SettingsPage";
+import ExecutionHistoryPage from "./pages/ExecutionHistoryPage";
 
 function NotFoundPage() {
   return (
@@ -64,6 +65,10 @@ export default function App() {
           <Route path="ideias" element={<IdeasPage />} />
           <Route path="automacoes" element={<AutomationsPage />} />
           <Route path="configuracoes" element={<SettingsPage />} />
+          <Route
+            path="/historico-execucoes"
+            element={<ExecutionHistoryPage />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
