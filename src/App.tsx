@@ -1,31 +1,25 @@
-
-import {
-  BrowserRouter,
-  Link,
-  Route,
-  Routes,
-} from 'react-router-dom';
-import AppLayout from './layouts/AppLayout';
-import DashboardPage from './pages/DashboardPage';
-import ProjectsPage from './pages/ProjectsPage';
-import TasksPage from './pages/TasksPage';
-import IdeasPage from './pages/IdeasPage';
-import AutomationsPage from './pages/AutomationsPage';
-import SettingsPage from './pages/SettingsPage';
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import AppLayout from "./layouts/AppLayout";
+import DashboardPage from "./pages/DashboardPage";
+import ProjectsPage from "./pages/ProjectsPage";
+import TasksPage from "./pages/TasksPage";
+import IdeasPage from "./pages/IdeasPage";
+import AutomationsPage from "./pages/AutomationsPage";
+import SettingsPage from "./pages/SettingsPage";
 
 function NotFoundPage() {
   return (
     <section
       style={{
         maxWidth: 680,
-        margin: '70px auto',
+        margin: "70px auto",
         padding: 24,
-        textAlign: 'center',
+        textAlign: "center",
       }}
     >
       <p
         style={{
-          color: '#6258d9',
+          color: "#6258d9",
           fontWeight: 800,
           letterSpacing: 2,
         }}
@@ -33,25 +27,23 @@ function NotFoundPage() {
         ERRO 404
       </p>
 
-      <h1 style={{ fontSize: 32, color: '#20283a' }}>
-        Página não encontrada
-      </h1>
+      <h1 style={{ fontSize: 32, color: "#20283a" }}>Página não encontrada</h1>
 
-      <p style={{ color: '#7a8498', lineHeight: 1.8 }}>
-        O endereço acessado não corresponde a uma página disponível
-        nesta versão da aplicação.
+      <p style={{ color: "#7a8498", lineHeight: 1.8 }}>
+        O endereço acessado não corresponde a uma página disponível nesta versão
+        da aplicação.
       </p>
 
       <Link
         to="/"
         style={{
-          display: 'inline-block',
+          display: "inline-block",
           marginTop: 16,
-          padding: '12px 18px',
-          color: '#fff',
-          background: '#5146e5',
+          padding: "12px 18px",
+          color: "#fff",
+          background: "#5146e5",
           borderRadius: 10,
-          textDecoration: 'none',
+          textDecoration: "none",
           fontWeight: 700,
         }}
       >
