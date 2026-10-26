@@ -1,0 +1,57 @@
+/* Cards de destaque do dashboard — réplica do painel de referência da Nexora.
+   Cada card tem sua cor (--c) e um fundo escuro com brilho no canto, borda colorida,
+   ícone em quadrado de vidro e uma marca d'água grande. */
+.nx-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; margin-bottom: 24px; }
+.nx-span-2 { grid-column: span 2; }
+.nx-span-3 { grid-column: span 3; }
+
+.nx-green  { --c: #34d399; --c-rgb: 52 211 153;  --bg1: #0c2b22; --bg2: #08191a; }
+.nx-orange { --c: #fb923c; --c-rgb: 251 146 60;  --bg1: #2b1a0b; --bg2: #170f0b; }
+.nx-blue   { --c: #3b82f6; --c-rgb: 59 130 246;  --bg1: #0b1b40; --bg2: #09122b; }
+.nx-purple { --c: #a78bfa; --c-rgb: 139 92 246;  --bg1: #1c1136; --bg2: #120c26; }
+.nx-teal   { --c: #22d3ee; --c-rgb: 34 211 238;  --bg1: #08262e; --bg2: #09171f; }
+
+.nx-card {
+  position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
+  min-height: 190px; padding: 24px; overflow: hidden; color: #fff;
+  background:
+    radial-gradient(120% 100% at 100% 0%, rgb(var(--c-rgb) / 0.2), transparent 62%),
+    linear-gradient(135deg, var(--bg1), var(--bg2));
+  border: 1px solid rgb(var(--c-rgb) / 0.5); border-radius: 20px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 20%), inset 0 1px 0 rgb(255 255 255 / 6%);
+  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+a.nx-card:hover, .nx-card-hover:hover { transform: translateY(-3px); border-color: rgb(var(--c-rgb) / 0.85); box-shadow: 0 14px 34px rgb(var(--c-rgb) / 0.22), 0 2px 6px rgb(0 0 0 / 25%); }
+.nx-card:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
+
+.nx-mark { position: absolute; z-index: -1; right: -26px; top: 50%; margin-top: -95px; color: var(--c); opacity: 0.17; pointer-events: none; transition: transform 450ms var(--ease), opacity 450ms var(--ease); }
+.nx-card:hover .nx-mark { transform: scale(1.07) rotate(-3deg); opacity: 0.24; }
+
+.nx-tile { display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid rgb(var(--c-rgb) / 0.55); border-radius: 13px; background: rgb(var(--c-rgb) / 0.14); color: var(--c); box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%), 0 0 18px rgb(var(--c-rgb) / 0.18); }
+.nx-body { display: grid; gap: 4px; }
+.nx-label { margin: 0; color: rgb(255 255 255 / 72%); font-size: 15px; font-weight: 500; }
+.nx-number { margin: 0; color: #fff; font-size: 48px; font-weight: 700; line-height: 1.02; letter-spacing: -0.035em; }
+.nx-title { margin: 0; color: #fff; font-size: 34px; font-weight: 700; line-height: 1.08; letter-spacing: -0.03em; }
+.nx-text { margin: 6px 0 0; color: rgb(255 255 255 / 72%); font-size: 13px; }
+
+.nx-foot { display: flex; align-items: center; gap: 10px; min-height: 20px; font-size: 13px; }
+.nx-foot > svg { flex: 0 0 auto; color: var(--c); }
+.nx-foot strong { color: rgb(255 255 255 / 92%); font-weight: 500; }
+.nx-foot span { padding-left: 10px; border-left: 1px solid rgb(255 255 255 / 20%); color: rgb(255 255 255 / 52%); }
+
+.nx-hero-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.nx-pill { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 8px; padding: 10px 18px; border: 1px solid rgb(var(--c-rgb) / 0.6); border-radius: 999px; background: rgb(var(--c-rgb) / 0.08); color: #fff; font-size: 13px; font-weight: 500; transition: background var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); }
+.nx-pill:hover { background: rgb(var(--c-rgb) / 0.22); }
+.nx-pill:hover svg { transform: translateX(3px); }
+.nx-pill svg { transition: transform var(--t-fast) var(--ease); }
+.nx-pill:focus-visible { outline: 2px solid var(--c); outline-offset: 2px; }
+
+@media (max-width: 1000px) {
+  .nx-span-2 { grid-column: span 3; }
+  .nx-span-2:nth-child(3) { grid-column: span 6; }
+}
+@media (max-width: 640px) {
+  .nx-span-2, .nx-span-3, .nx-span-2:nth-child(3) { grid-column: span 6; }
+  .nx-number { font-size: 40px; }
+  .nx-hero-row { flex-direction: column; align-items: flex-start; }
+}

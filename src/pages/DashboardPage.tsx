@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  Activity,
   ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
   Blocks,
   Check,
+  CircleCheck,
+  CircleCheckBig,
   Clock3,
-  FolderKanban,
   Lightbulb,
-  ListTodo,
   Plus,
   ShieldCheck,
   Sparkles,
@@ -20,6 +19,7 @@ import {
   Zap,
 } from "lucide-react";
 import '../App.css';
+import '../styles/dashboard-cards.css';
 
 type Task = {
   id: number;
@@ -33,7 +33,7 @@ const initialTasks: Task[] = [
   {
     id: 1,
     title: "Definir a estrutura inicial do projeto",
-    project: "MFDS Workspace",
+    project: "Nexora",
     priority: "Alta",
     done: false,
   },
@@ -54,7 +54,7 @@ const initialTasks: Task[] = [
   {
     id: 4,
     title: "Preparar o ambiente de desenvolvimento",
-    project: "MFDS Workspace",
+    project: "Nexora",
     priority: "Baixa",
     done: false,
   },
@@ -62,7 +62,7 @@ const initialTasks: Task[] = [
 
 const projects = [
   {
-    name: "MFDS Workspace",
+    name: "Nexora",
     category: "Produto principal",
     progress: 35,
     color: "mint",
@@ -113,7 +113,7 @@ function App() {
       {
         id: Math.max(0, ...current.map((task) => task.id)) + 1,
         title,
-        project: "MFDS Workspace",
+        project: "Nexora",
         priority: "Média",
         done: false,
       },
@@ -170,77 +170,75 @@ function App() {
           )}
 
           <>
-              <section
-                className="stats-grid"
-                aria-label="Indicadores do workspace"
-              >
-                <article className="stat-card">
-                  <div className="stat-top">
-                    <span className="stat-label">Projetos ativos</span>
-                    <span className="stat-icon stat-icon-mint">
-                      <FolderKanban size={19} />
-                    </span>
+              <section className="nx-grid" aria-label="Indicadores do workspace">
+                <Link to="/projetos" className="nx-card nx-green nx-span-2">
+                  <div className="nx-tile"><Blocks size={21} /></div>
+                  <div className="nx-body">
+                    <p className="nx-label">Projetos ativos</p>
+                    <p className="nx-number">03</p>
                   </div>
-                  <div className="stat-number">03</div>
-                  <div className="stat-foot">
-                    <span className="stat-neutral">Em andamento</span>
-                    <span className="stat-foot-note">dados demonstrativos</span>
+                  <div className="nx-foot">
+                    <ArrowUpRight size={16} />
+                    <strong>Em andamento</strong>
+                    <span>dados demonstrativos</span>
                   </div>
-                  <div className="stat-decoration decoration-mint" />
+                  <Blocks className="nx-mark" size={190} strokeWidth={1.3} aria-hidden="true" />
+                </Link>
+
+                <Link to="/tarefas" className="nx-card nx-orange nx-span-2">
+                  <div className="nx-tile"><CircleCheck size={21} /></div>
+                  <div className="nx-body">
+                    <p className="nx-label">Tarefas pendentes</p>
+                    <p className="nx-number">{String(pendingTasks).padStart(2, "0")}</p>
+                  </div>
+                  <div className="nx-foot">
+                    <ArrowUpRight size={16} />
+                    <strong>Para continuar</strong>
+                    <span>lista de demonstração</span>
+                  </div>
+                  <CircleCheck className="nx-mark" size={190} strokeWidth={1.3} aria-hidden="true" />
+                </Link>
+
+                <Link to="/tarefas" className="nx-card nx-blue nx-span-2">
+                  <div className="nx-tile"><CircleCheckBig size={21} /></div>
+                  <div className="nx-body">
+                    <p className="nx-label">Tarefas concluídas</p>
+                    <p className="nx-number">{String(completedTasks).padStart(2, "0")}</p>
+                  </div>
+                  <div className="nx-foot">
+                    <ArrowUpRight size={16} />
+                    <strong>Concluídas</strong>
+                    <span>nesta demonstração</span>
+                  </div>
+                  <CircleCheckBig className="nx-mark" size={190} strokeWidth={1.3} aria-hidden="true" />
+                </Link>
+
+                <article className="nx-card nx-card-hover nx-purple nx-span-3">
+                  <div className="nx-tile"><Clock3 size={21} /></div>
+                  <div className="nx-body">
+                    <p className="nx-label">Ritmo de execução</p>
+                    <p className="nx-title">Foco.</p>
+                  </div>
+                  <div className="nx-foot">
+                    <ArrowUpRight size={16} />
+                    <strong>Um passo por vez</strong>
+                  </div>
+                  <Clock3 className="nx-mark" size={200} strokeWidth={1.2} aria-hidden="true" />
                 </article>
 
-                <article className="stat-card">
-                  <div className="stat-top">
-                    <span className="stat-label">Tarefas pendentes</span>
-                    <span className="stat-icon stat-icon-amber">
-                      <ListTodo size={19} />
-                    </span>
+                <article className="nx-card nx-card-hover nx-teal nx-span-3">
+                  <div className="nx-tile"><Target size={21} /></div>
+                  <div className="nx-hero-row">
+                    <div className="nx-body">
+                      <p className="nx-label">Acompanhamento</p>
+                      <p className="nx-title">Seus projetos</p>
+                      <p className="nx-text">Ideias em movimento, um passo de cada vez.</p>
+                    </div>
+                    <button className="nx-pill" onClick={() => navigate("/projetos")}>
+                      Ver projetos <ArrowRight size={15} />
+                    </button>
                   </div>
-                  <div className="stat-number">
-                    {String(pendingTasks).padStart(2, "0")}
-                  </div>
-                  <div className="stat-foot">
-                    <span className="stat-neutral">Para continuar</span>
-                    <span className="stat-foot-note">
-                      lista de demonstração
-                    </span>
-                  </div>
-                  <div className="stat-decoration decoration-amber" />
-                </article>
-
-                <article className="stat-card">
-                  <div className="stat-top">
-                    <span className="stat-label">Tarefas concluídas</span>
-                    <span className="stat-icon stat-icon-blue">
-                      <Check size={19} />
-                    </span>
-                  </div>
-                  <div className="stat-number">
-                    {String(completedTasks).padStart(2, "0")}
-                  </div>
-                  <div className="stat-foot">
-                    <span className="stat-positive">
-                      <ArrowUpRight size={14} /> Concluídas
-                    </span>
-                    <span className="stat-foot-note">nesta demonstração</span>
-                  </div>
-                  <div className="stat-decoration decoration-blue" />
-                </article>
-
-                <article className="stat-card">
-                  <div className="stat-top">
-                    <span className="stat-label">Ritmo de execução</span>
-                    <span className="stat-icon stat-icon-violet">
-                      <Activity size={19} />
-                    </span>
-                  </div>
-                  <div className="stat-number">
-                    Foco<span className="stat-word-dot">.</span>
-                  </div>
-                  <div className="stat-foot">
-                    <span className="stat-neutral">Um passo por vez</span>
-                  </div>
-                  <div className="stat-decoration decoration-violet" />
+                  <Target className="nx-mark" size={200} strokeWidth={1.2} aria-hidden="true" />
                 </article>
               </section>
 
@@ -249,9 +247,9 @@ function App() {
                   <section className="panel projects-panel">
                     <div className="panel-heading">
                       <div>
-                        <div className="section-kicker">ACOMPANHAMENTO</div>
-                        <h2>Seus projetos</h2>
-                        <p>Ideias em movimento, um passo de cada vez.</p>
+                        <div className="section-kicker">PROGRESSO</div>
+                        <h2>Andamento por projeto</h2>
+                        <p>Acompanhe cada frente em um só lugar.</p>
                       </div>
                       <button
                         className="text-button"
@@ -480,7 +478,7 @@ function App() {
 
               <footer className="page-footer">
                 <span>
-                  MFDS Workspace <span className="footer-dot">·</span> Base
+                  Nexora <span className="footer-dot">·</span> Base
                   inicial
                 </span>
                 <span>Feito para transformar intenção em ação.</span>
