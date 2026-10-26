@@ -1,37 +1,40 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { ComponentType } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   Bell,
   ChevronLeft,
   ChevronRight,
-  FolderKanban,
   History,
-  LayoutDashboard,
-  Lightbulb,
   Menu,
   Search,
   Settings2,
-  SquareCheckBig,
   X,
-  Zap,
 } from 'lucide-react';
 import NexoraMark from '../components/NexoraMark';
+import {
+  AutomationsIcon,
+  IdeasIcon,
+  OverviewIcon,
+  ProjectsIcon,
+  TasksIcon,
+} from '../components/NavIcons';
 import { useSettings } from '../settings/SettingsContext';
 import '../styles/navigation.css';
 
 type NavigationItem = {
   label: string;
   to: string;
-  icon: typeof LayoutDashboard;
+  icon: ComponentType<{ size?: number }>;
   end?: boolean;
 };
 
 const mainItems: NavigationItem[] = [
-  { label: 'Visão geral', to: '/', icon: LayoutDashboard, end: true },
-  { label: 'Projetos', to: '/projetos', icon: FolderKanban },
-  { label: 'Minhas tarefas', to: '/tarefas', icon: SquareCheckBig },
-  { label: 'Ideias', to: '/ideias', icon: Lightbulb },
-  { label: 'Automações', to: '/automacoes', icon: Zap },
+  { label: 'Visão geral', to: '/', icon: OverviewIcon, end: true },
+  { label: 'Projetos', to: '/projetos', icon: ProjectsIcon },
+  { label: 'Minhas tarefas', to: '/tarefas', icon: TasksIcon },
+  { label: 'Ideias', to: '/ideias', icon: IdeasIcon },
+  { label: 'Automações', to: '/automacoes', icon: AutomationsIcon },
   { label: 'Histórico', to: '/historico-execucoes', icon: History },
 ];
 
