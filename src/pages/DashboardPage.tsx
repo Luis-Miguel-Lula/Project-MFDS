@@ -1,26 +1,17 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Activity,
   ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
-  Bell,
   Blocks,
   Check,
-  ChevronDown,
-  CircleHelp,
   Clock3,
-  Command,
-  Compass,
   FolderKanban,
-  LayoutDashboard,
   Lightbulb,
   ListTodo,
-  Menu,
-  MoreHorizontal,
   Plus,
-  Search,
-  Settings2,
   ShieldCheck,
   Sparkles,
   Target,
@@ -93,22 +84,12 @@ const projects = [
   },
 ];
 
-const navigation = [
-  { label: "Visão geral", icon: LayoutDashboard },
-  { label: "Projetos", icon: FolderKanban },
-  { label: "Minhas tarefas", icon: ListTodo },
-  { label: "Ideias", icon: Lightbulb },
-  { label: "Automações", icon: Zap },
-];
-
 function App() {
-  const [activePage, setActivePage] = useState("Visão geral");
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState(initialTasks);
   const [idea, setIdea] = useState("");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showNewTask, setShowNewTask] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState("");
-  const [searchOpen, setSearchOpen] = useState(false);
   const [notice, setNotice] = useState("");
 
   const completedTasks = tasks.filter((task) => task.done).length;
@@ -154,180 +135,8 @@ function App() {
     );
   }
 
-  function selectPage(label: string) {
-    setActivePage(label);
-    setMobileMenuOpen(false);
-
-    if (label !== "Visão geral") {
-      setNotice(
-        `A área "${label}" terá sua própria implementação em um próximo tutorial.`,
-      );
-    } else {
-      setNotice("");
-    }
-  }
-
   return (
-    <div className="app-shell">
-      {mobileMenuOpen && (
-        <button
-          className="mobile-backdrop"
-          aria-label="Fechar menu"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
-
-      <aside className={`sidebar ${mobileMenuOpen ? "sidebar-open" : ""}`}>
-        <a
-          className="brand"
-          href="#"
-          onClick={(event) => {
-            event.preventDefault();
-            selectPage("Visão geral");
-          }}
-        >
-          <span className="brand-mark">
-            <Command size={22} strokeWidth={2.4} />
-          </span>
-          <span className="brand-copy">
-            <strong>mfds</strong>
-            <span>WORKSPACE</span>
-          </span>
-        </a>
-
-        <div className="workspace-switcher">
-          <span className="workspace-avatar">M</span>
-          <span className="workspace-info">
-            <strong>Meu workspace</strong>
-            <small>Plano de desenvolvimento</small>
-          </span>
-          <ChevronDown size={16} />
-        </div>
-
-        <div className="nav-section-label">WORKSPACE</div>
-        <nav className="main-nav" aria-label="Navegação principal">
-          {navigation.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.label}
-                className={`nav-link ${
-                  activePage === item.label ? "nav-link-active" : ""
-                }`}
-                onClick={() => selectPage(item.label)}
-              >
-                <Icon size={18} />
-                <span>{item.label}</span>
-                {item.label === "Minhas tarefas" && (
-                  <span className="nav-count">{pendingTasks}</span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        <div className="nav-section-label tools-label">PREFERÊNCIAS</div>
-        <nav className="main-nav" aria-label="Preferências">
-          <button
-            className={`nav-link ${
-              activePage === "Configurações" ? "nav-link-active" : ""
-            }`}
-            onClick={() => selectPage("Configurações")}
-          >
-            <Settings2 size={18} />
-            <span>Configurações</span>
-          </button>
-          <button
-            className="nav-link"
-            onClick={() =>
-              setNotice("A central de ajuda será implementada posteriormente.")
-            }
-          >
-            <CircleHelp size={18} />
-            <span>Ajuda e suporte</span>
-          </button>
-        </nav>
-
-        <div className="sidebar-spacer" />
-
-        <div className="sidebar-tip">
-          <div className="tip-icon">
-            <Sparkles size={18} />
-          </div>
-          <strong>Uma ideia de cada vez.</strong>
-          <p>Transforme seus objetivos em pequenos passos possíveis.</p>
-          <button onClick={() => selectPage("Ideias")}>
-            Explorar ideias <ArrowRight size={14} />
-          </button>
-        </div>
-
-        <div className="profile-row">
-          <div className="profile-avatar">MF</div>
-          <div className="profile-copy">
-            <strong>Meu perfil</strong>
-            <span>Espaço pessoal</span>
-          </div>
-          <MoreHorizontal size={19} />
-        </div>
-      </aside>
-
-      <main className="main-area">
-        <header className="topbar">
-          <div className="topbar-left">
-            <button
-              className="icon-button mobile-menu-button"
-              aria-label="Abrir menu"
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <Menu size={20} />
-            </button>
-            <div className="breadcrumb">
-              Workspace <span>/</span> <strong>{activePage}</strong>
-            </div>
-          </div>
-          <div className="topbar-actions">
-            <button
-              className={`search-button ${searchOpen ? "search-button-active" : ""}`}
-              onClick={() => setSearchOpen((open) => !open)}
-            >
-              <Search size={17} />
-              <span>Buscar</span>
-              <kbd>⌘ K</kbd>
-            </button>
-            <button
-              className="icon-button notification-button"
-              aria-label="Notificações"
-              onClick={() =>
-                setNotice("Você não tem notificações novas nesta demonstração.")
-              }
-            >
-              <Bell size={19} />
-              <span className="notification-dot" />
-            </button>
-            <div className="topbar-avatar">MF</div>
-          </div>
-        </header>
-
-        {searchOpen && (
-          <div className="search-panel">
-            <Search size={18} />
-            <input
-              autoFocus
-              placeholder="Buscar projetos, tarefas ou ideias..."
-              onKeyDown={(event) => {
-                if (event.key === "Escape") setSearchOpen(false);
-              }}
-            />
-            <button
-              className="icon-button"
-              onClick={() => setSearchOpen(false)}
-            >
-              <X size={17} />
-            </button>
-          </div>
-        )}
-
-        <div className="page-content">
+    <div className="page-content">
           <section className="welcome-row">
             <div>
               <div className="eyebrow">
@@ -360,27 +169,7 @@ function App() {
             </div>
           )}
 
-          {activePage !== "Visão geral" && (
-            <div className="section-placeholder">
-              <div className="placeholder-icon">
-                <Compass size={24} />
-              </div>
-              <h2>{activePage}</h2>
-              <p>
-                Esta área está planejada para os próximos tutoriais. Por
-                enquanto, você pode explorar a visão geral.
-              </p>
-              <button
-                className="secondary-button"
-                onClick={() => selectPage("Visão geral")}
-              >
-                Voltar à visão geral <ArrowRight size={16} />
-              </button>
-            </div>
-          )}
-
-          {activePage === "Visão geral" && (
-            <>
+          <>
               <section
                 className="stats-grid"
                 aria-label="Indicadores do workspace"
@@ -466,7 +255,7 @@ function App() {
                       </div>
                       <button
                         className="text-button"
-                        onClick={() => selectPage("Projetos")}
+                        onClick={() => navigate("/projetos")}
                       >
                         Ver projetos <ArrowRight size={15} />
                       </button>
@@ -509,7 +298,7 @@ function App() {
                             <button
                               className="project-more icon-button"
                               aria-label={`Abrir projeto ${project.name}`}
-                              onClick={() => selectPage("Projetos")}
+                              onClick={() => navigate("/projetos")}
                             >
                               <ArrowUpRight size={17} />
                             </button>
@@ -519,7 +308,7 @@ function App() {
                     </div>
                     <button
                       className="add-project-button"
-                      onClick={() => selectPage("Projetos")}
+                      onClick={() => navigate("/projetos")}
                     >
                       <Plus size={16} /> Explorar área de projetos
                     </button>
@@ -537,7 +326,7 @@ function App() {
                       </div>
                       <button
                         className="text-button"
-                        onClick={() => selectPage("Minhas tarefas")}
+                        onClick={() => navigate("/tarefas")}
                       >
                         Ver todas <ArrowRight size={15} />
                       </button>
@@ -696,10 +485,7 @@ function App() {
                 </span>
                 <span>Feito para transformar intenção em ação.</span>
               </footer>
-            </>
-          )}
-        </div>
-      </main>
+          </>
     </div>
   );
 }

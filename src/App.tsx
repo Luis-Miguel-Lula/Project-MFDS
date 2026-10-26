@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import DashboardPage from "./pages/DashboardPage";
@@ -10,44 +11,14 @@ import ExecutionHistoryPage from "./pages/ExecutionHistoryPage";
 
 function NotFoundPage() {
   return (
-    <section
-      style={{
-        maxWidth: 680,
-        margin: "70px auto",
-        padding: 24,
-        textAlign: "center",
-      }}
-    >
-      <p
-        style={{
-          color: "#6258d9",
-          fontWeight: 800,
-          letterSpacing: 2,
-        }}
-      >
-        ERRO 404
+    <section className="not-found">
+      <p className="not-found-code">ERRO 404</p>
+      <h1>Página não encontrada</h1>
+      <p>
+        O endereço acessado não corresponde a uma página disponível nesta
+        versão da aplicação.
       </p>
-
-      <h1 style={{ fontSize: 32, color: "#20283a" }}>Página não encontrada</h1>
-
-      <p style={{ color: "#7a8498", lineHeight: 1.8 }}>
-        O endereço acessado não corresponde a uma página disponível nesta versão
-        da aplicação.
-      </p>
-
-      <Link
-        to="/"
-        style={{
-          display: "inline-block",
-          marginTop: 16,
-          padding: "12px 18px",
-          color: "#fff",
-          background: "#5146e5",
-          borderRadius: 10,
-          textDecoration: "none",
-          fontWeight: 700,
-        }}
-      >
+      <Link className="not-found-link" to="/">
         Voltar ao dashboard
       </Link>
     </section>

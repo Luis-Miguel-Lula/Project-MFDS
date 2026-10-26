@@ -1,22 +1,15 @@
 .mfds-automations {
-  --auto-ink: #20263a;
-  --auto-muted: #737b8f;
-  --auto-border: #e5e8f0;
-  --auto-primary: #6256d9;
-  --auto-primary-dark: #4e43bf;
-  --auto-surface: #ffffff;
-  --auto-canvas: #f7f8fc;
+  --auto-ink: var(--text);
+  --auto-muted: var(--text-muted);
+  --auto-border: var(--border);
+  --auto-primary: var(--accent);
+  --auto-primary-dark: var(--accent-hover);
+  --auto-surface: var(--surface);
+  --auto-canvas: var(--bg);
   width: 100%;
   min-width: 0;
   color: var(--auto-ink);
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family:var(--font-sans);
   padding: 28px;
   box-sizing: border-box;
 }
@@ -42,7 +35,7 @@
 .mfds-automations input:focus-visible,
 .mfds-automations select:focus-visible,
 .mfds-automations textarea:focus-visible {
-  outline: 3px solid #b9b3ff;
+  outline: 3px solid var(--accent-border);
   outline-offset: 2px;
 }
 
@@ -79,8 +72,8 @@
 
 .mfds-automations__demo {
   gap: 8px;
-  color: #667085;
-  background: #fff;
+  color: var(--text-muted);
+  background: var(--surface);
   border: 1px solid var(--auto-border);
   border-radius: 999px;
   padding: 7px 11px;
@@ -92,7 +85,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #d99735;
+  background: var(--warning);
 }
 
 .mfds-automations__header {
@@ -140,16 +133,15 @@
   border-radius: 10px;
   font-size: 13px;
   font-weight: 700;
-  transition:
-    background 150ms ease,
+  transition: background 150ms ease,
     transform 150ms ease;
 }
 
 .mfds-automations__primary-button {
-  color: #fff;
+  color: var(--on-accent);
   background: var(--auto-primary);
   border: 1px solid var(--auto-primary);
-  box-shadow: 0 4px 10px rgb(98 86 217 / 14%);
+  box-shadow: 0 4px 10px rgb(75 121 92 / 14%);
 }
 
 .mfds-automations__primary-button:hover {
@@ -158,13 +150,13 @@
 }
 
 .mfds-automations__secondary-button {
-  color: #41485c;
-  background: #fff;
+  color: var(--text-2);
+  background: var(--surface);
   border: 1px solid var(--auto-border);
 }
 
 .mfds-automations__secondary-button:hover {
-  background: #f4f5fa;
+  background: var(--surface-2);
 }
 
 .mfds-automations__notice {
@@ -173,9 +165,9 @@
   gap: 10px;
   margin: 0 0 20px;
   padding: 12px 14px;
-  color: #176c49;
-  background: #ecf9f2;
-  border: 1px solid #c8ecd9;
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
   border-radius: 10px;
   font-size: 13px;
 }
@@ -228,23 +220,23 @@
 }
 
 .icon-purple {
-  color: #6356d8;
-  background: #f0edff;
+  color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .icon-green {
-  color: #21845b;
-  background: #e9f8ef;
+  color: var(--accent-text);
+  background: var(--accent-soft);
 }
 
 .icon-orange {
-  color: #b97520;
-  background: #fff3e2;
+  color: var(--warning-text);
+  background: var(--warning-soft);
 }
 
 .icon-blue {
-  color: #3679c9;
-  background: #eaf3ff;
+  color: var(--info-text);
+  background: var(--info-soft);
 }
 
 .mfds-automations__summary-card > div:last-child {
@@ -291,7 +283,7 @@
   padding: 6px 10px;
   border: 1px solid var(--auto-border);
   border-radius: 8px;
-  color: #5d6579;
+  color: var(--text-muted);
   font-size: 12px;
   white-space: nowrap;
 }
@@ -309,8 +301,8 @@
   min-width: 0;
   padding: 0 13px;
   height: 45px;
-  color: #858ca0;
-  background: #fff;
+  color: var(--text-muted);
+  background: var(--surface);
   border: 1px solid var(--auto-border);
   border-radius: 10px;
 }
@@ -332,14 +324,14 @@
 
 .mfds-automations__search:focus-within {
   border-color: var(--auto-primary);
-  box-shadow: 0 0 0 3px rgb(98 86 217 / 10%);
+  box-shadow: 0 0 0 3px rgb(75 121 92 / 10%);
 }
 
 .mfds-automations__filter {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #6d7488;
+  color: var(--text-muted);
   font-size: 12px;
 }
 
@@ -355,7 +347,7 @@
   height: 45px;
   padding: 0 34px 0 12px;
   color: var(--auto-ink);
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--auto-border);
   border-radius: 10px;
   cursor: pointer;
@@ -378,17 +370,16 @@
   position: relative;
   min-width: 0;
   padding: 21px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--auto-border);
   border-radius: 15px;
   box-shadow: 0 3px 12px rgb(33 42 72 / 3%);
-  transition:
-    border-color 160ms ease,
+  transition: border-color 160ms ease,
     box-shadow 160ms ease;
 }
 
 .mfds-automations__card:hover {
-  border-color: #d5d1fa;
+  border-color: var(--accent-border);
   box-shadow: 0 8px 22px rgb(33 42 72 / 6%);
 }
 
@@ -400,8 +391,8 @@
 .mfds-automations__card-icon {
   width: 43px;
   height: 43px;
-  color: #6557d8;
-  background: #f0edff;
+  color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .mfds-automations__status {
@@ -424,23 +415,23 @@
 }
 
 .mfds-automations__status.is-active {
-  color: #18794e;
-  background: #e9f8ef;
+  color: var(--accent-text);
+  background: var(--accent-soft);
 }
 
 .mfds-automations__status.is-paused {
-  color: #9a6017;
-  background: #fff3df;
+  color: var(--warning-text);
+  background: var(--warning-soft);
 }
 
 .mfds-automations__status.is-draft {
-  color: #53617b;
-  background: #eef1f7;
+  color: var(--text-muted);
+  background: var(--surface-3);
 }
 
 .mfds-automations__status.is-archived {
-  color: #707789;
-  background: #f0f1f4;
+  color: var(--text-muted);
+  background: var(--surface-3);
 }
 
 .mfds-automations__menu-wrap {
@@ -454,14 +445,14 @@
   width: 35px;
   height: 35px;
   padding: 0;
-  color: #697188;
+  color: var(--text-muted);
   background: transparent;
   border: 1px solid transparent;
   border-radius: 9px;
 }
 
 .mfds-automations__icon-button:hover {
-  background: #f5f6fb;
+  background: var(--surface-2);
   border-color: var(--auto-border);
 }
 
@@ -474,7 +465,7 @@
   gap: 3px;
   width: 158px;
   padding: 6px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--auto-border);
   border-radius: 10px;
   box-shadow: 0 12px 32px rgb(20 25 45 / 13%);
@@ -486,7 +477,7 @@
   gap: 9px;
   width: 100%;
   padding: 10px 9px;
-  color: #444b60;
+  color: var(--text-2);
   background: transparent;
   border: 0;
   border-radius: 7px;
@@ -495,7 +486,7 @@
 }
 
 .mfds-automations__menu button:hover {
-  background: #f4f5fa;
+  background: var(--surface-2);
 }
 
 .mfds-automations__card-title-button {
@@ -528,7 +519,7 @@
   gap: 9px;
   padding: 13px;
   background: var(--auto-canvas);
-  border: 1px solid #edf0f6;
+  border: 1px solid var(--border);
   border-radius: 10px;
 }
 
@@ -540,7 +531,7 @@
 .mfds-automations__flow > div > span {
   display: block;
   margin-bottom: 8px;
-  color: #8a91a3;
+  color: var(--text-muted);
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -550,7 +541,7 @@
   display: flex;
   align-items: flex-start;
   gap: 6px;
-  color: #4d556b;
+  color: var(--text-2);
   font-size: 11px;
   line-height: 1.5;
   font-weight: 650;
@@ -559,13 +550,13 @@
 
 .mfds-automations__flow strong svg {
   flex: 0 0 auto;
-  color: #7c70df;
+  color: var(--accent);
 }
 
 .mfds-automations__flow-arrow {
   flex: 0 0 auto;
   margin-top: 15px;
-  color: #9da3b4;
+  color: var(--text-disabled);
 }
 
 .mfds-automations__card-footer {
@@ -574,7 +565,7 @@
   gap: 10px;
   margin-top: 17px;
   padding-top: 15px;
-  border-top: 1px solid #eff0f5;
+  border-top: 1px solid var(--border);
 }
 
 .mfds-automations__card-footer > span,
@@ -582,7 +573,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #858ca0;
+  color: var(--text-muted);
   font-size: 10px;
 }
 
@@ -598,8 +589,8 @@
 .mfds-automations__empty {
   padding: 48px 20px;
   text-align: center;
-  background: #fff;
-  border: 1px dashed #d9dce7;
+  background: var(--surface);
+  border: 1px dashed var(--border-strong);
   border-radius: 15px;
 }
 
@@ -609,8 +600,8 @@
   width: 52px;
   height: 52px;
   margin: 0 auto 15px;
-  color: #766be0;
-  background: #f0edff;
+  color: var(--accent);
+  background: var(--accent-soft);
   border-radius: 15px;
 }
 
@@ -631,16 +622,16 @@
   align-items: flex-start;
   gap: 13px;
   padding: 17px;
-  background: #f2f0ff;
-  border: 1px solid #e4e0ff;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
   border-radius: 13px;
 }
 
 .mfds-automations__info-icon {
   width: 37px;
   height: 37px;
-  color: #6557d8;
-  background: #fff;
+  color: var(--accent);
+  background: var(--surface);
 }
 
 .mfds-automations__info strong {
@@ -651,7 +642,7 @@
 
 .mfds-automations__info p {
   margin: 0;
-  color: #666d83;
+  color: var(--text-muted);
   font-size: 12px;
   line-height: 1.7;
 }
@@ -674,8 +665,8 @@
   overflow-y: auto;
   padding: 25px;
   color: var(--auto-ink);
-  background: #fff;
-  border: 1px solid #ebeaf4;
+  background: var(--surface);
+  border: 1px solid var(--accent-border);
   border-radius: 18px;
   box-shadow: 0 25px 80px rgb(20 25 45 / 24%);
 }
@@ -714,7 +705,7 @@
 .mfds-automations__form label {
   display: grid;
   gap: 8px;
-  color: #41485c;
+  color: var(--text-2);
   font-size: 12px;
   font-weight: 700;
 }
@@ -726,8 +717,8 @@
   min-width: 0;
   padding: 11px 12px;
   color: var(--auto-ink);
-  background: #fff;
-  border: 1px solid #dfe2eb;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
   border-radius: 9px;
   font-size: 13px;
   font-weight: 400;
@@ -746,7 +737,7 @@
 
 .mfds-automations__form input::placeholder,
 .mfds-automations__form textarea::placeholder {
-  color: #a1a7b7;
+  color: var(--text-disabled);
 }
 
 .mfds-automations__form-row {
@@ -757,9 +748,9 @@
 
 .mfds-automations__form-error {
   margin: 0;
-  color: #b42318;
-  background: #fff0ef;
-  border: 1px solid #f6d1cd;
+  color: var(--danger-text);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-border);
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 12px;
@@ -770,9 +761,9 @@
   align-items: flex-start;
   gap: 9px;
   padding: 12px;
-  color: #666d83;
-  background: #f7f8fc;
-  border: 1px solid #eceef5;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
   border-radius: 9px;
   font-size: 11px;
   line-height: 1.65;
@@ -811,12 +802,12 @@
   min-width: 0;
   padding: 14px;
   background: var(--auto-canvas);
-  border: 1px solid #eceef5;
+  border: 1px solid var(--border);
   border-radius: 10px;
 }
 
 .mfds-automations__details-grid > div > span {
-  color: #7a8195;
+  color: var(--text-muted);
   font-size: 11px;
 }
 

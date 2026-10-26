@@ -1,26 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap");
+@import "./styles/theme.css";
+
 :root {
-  font-family: "DM Sans", sans-serif;
-  color: #202820;
-  background: #f7f8f5;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --color-bg: #f7f8f5;
-  --color-surface: #ffffff;
-  --color-sidebar: #202b27;
-  --color-sidebar-muted: #a3b1a9;
-  --color-text: #202820;
-  --color-muted: #849087;
-  --color-border: #e8ebe5;
-  --color-accent: #4b795c;
-  --color-accent-dark: #355d43;
-  --color-accent-soft: #eaf2eb;
-  --color-mint: #dfeee1;
-  --color-amber: #f6ead3;
-  --color-blue: #e2eafa;
-  --color-violet: #ece5f8;
   font-optical-sizing: auto;
 }
 
@@ -40,34 +25,25 @@ body {
   margin: 0;
 }
 
-body,
 button,
 input,
+select,
 textarea {
-  font-family: "DM Sans", sans-serif;
-}
-
-button,
-input,
-textarea {
+  font-family: inherit;
   font-size: inherit;
 }
 
 button {
+  color: inherit;
   cursor: pointer;
 }
 
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-  outline: 3px solid #8ab59a;
-  outline-offset: 3px;
-}
-
-button:disabled {
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 a {
@@ -75,20 +51,11 @@ a {
   text-decoration: none;
 }
 
-button {
-  color: inherit;
-}
-
 h1,
 h2,
 h3,
 p {
   margin-top: 0;
-}
-
-::selection {
-  background: #dceade;
-  color: #203b29;
 }
 
 #root {
