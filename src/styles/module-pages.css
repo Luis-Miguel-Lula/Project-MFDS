@@ -10,7 +10,7 @@
 }
 
 .module-eyebrow {
-  color: #6258d9;
+  color: var(--accent);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.8px;
@@ -19,7 +19,7 @@
 
 .module-heading h1 {
   margin: 10px 0;
-  color: #20283a;
+  color: var(--text);
   font-size: clamp(27px, 4vw, 36px);
   line-height: 1.2;
   letter-spacing: -1.2px;
@@ -28,7 +28,7 @@
 .module-heading > p {
   max-width: 680px;
   margin: 0;
-  color: #7a8498;
+  color: var(--text-muted);
   font-size: 14px;
   line-height: 1.8;
 }
@@ -38,8 +38,8 @@
   align-items: center;
   gap: 18px;
   padding: 24px;
-  background: #fff;
-  border: 1px solid #e7eaf0;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 16px;
   box-shadow: 0 4px 18px rgb(28 39 75 / 3%);
 }
@@ -50,8 +50,8 @@
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  color: #5146e5;
-  background: #eeedff;
+  color: var(--accent);
+  background: var(--accent-soft);
   border-radius: 14px;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .module-status-label {
-  color: #7a8498;
+  color: var(--text-muted);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.4px;
@@ -69,13 +69,13 @@
 
 .module-status-copy h2 {
   margin: 7px 0;
-  color: #20283a;
+  color: var(--text);
   font-size: 19px;
 }
 
 .module-status-copy p {
   margin: 0;
-  color: #7a8498;
+  color: var(--text-muted);
   font-size: 13px;
   line-height: 1.8;
 }
@@ -83,8 +83,8 @@
 .module-badge {
   flex-shrink: 0;
   padding: 7px 10px;
-  color: #94651a;
-  background: #fff5dc;
+  color: var(--warning-text);
+  background: var(--warning-soft);
   border-radius: 20px;
   font-size: 10px;
   font-weight: 700;
@@ -101,7 +101,7 @@
 
 .module-section-heading p {
   margin: 0;
-  color: #7a8498;
+  color: var(--text-muted);
   font-size: 12px;
 }
 
@@ -114,8 +114,8 @@
 .module-feature {
   min-height: 126px;
   padding: 20px;
-  background: #fff;
-  border: 1px solid #e7eaf0;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 13px;
 }
 
@@ -124,8 +124,8 @@
   place-items: center;
   width: 31px;
   height: 31px;
-  color: #5146e5;
-  background: #eeedff;
+  color: var(--accent);
+  background: var(--accent-soft);
   border-radius: 9px;
   font-size: 11px;
   font-weight: 800;
@@ -133,7 +133,7 @@
 
 .module-feature p {
   margin: 16px 0 0;
-  color: #3e475b;
+  color: var(--text-2);
   font-size: 13px;
   line-height: 1.7;
 }
@@ -144,15 +144,15 @@
   gap: 12px;
   margin-top: 24px;
   padding: 16px;
-  color: #6d7184;
-  background: #f0efff;
+  color: var(--text-muted);
+  background: var(--accent-soft);
   border-radius: 12px;
 }
 
 .module-notice svg {
   flex-shrink: 0;
   margin-top: 2px;
-  color: #5146e5;
+  color: var(--accent);
 }
 
 .module-notice p {
@@ -166,7 +166,7 @@
   align-items: center;
   gap: 9px;
   margin-top: 24px;
-  color: #5146e5;
+  color: var(--accent);
   text-decoration: none;
   font-size: 13px;
   font-weight: 700;

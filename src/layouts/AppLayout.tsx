@@ -1,156 +1,271 @@
-
-import { useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Activity,
   Bell,
-  Bot,
-  CheckSquare,
   ChevronLeft,
   ChevronRight,
   FolderKanban,
+  History,
   LayoutDashboard,
   Lightbulb,
   Menu,
-  Settings,
+  Search,
+  Settings2,
+  SquareCheckBig,
   X,
+  Zap,
 } from 'lucide-react';
+import NexoraMark from '../components/NexoraMark';
+import { useSettings } from '../settings/SettingsContext';
 import '../styles/navigation.css';
 
-const navigationItems = [
-  { label: 'Dashboard', to: '/', icon: LayoutDashboard, end: true },
+type NavigationItem = {
+  label: string;
+  to: string;
+  icon: typeof LayoutDashboard;
+  end?: boolean;
+};
+
+const mainItems: NavigationItem[] = [
+  { label: 'Visão geral', to: '/', icon: LayoutDashboard, end: true },
   { label: 'Projetos', to: '/projetos', icon: FolderKanban },
-  { label: 'Tarefas', to: '/tarefas', icon: CheckSquare },
+  { label: 'Minhas tarefas', to: '/tarefas', icon: SquareCheckBig },
   { label: 'Ideias', to: '/ideias', icon: Lightbulb },
-  { label: 'Automações', to: '/automacoes', icon: Bot },
-  { label: 'Configurações', to: '/configuracoes', icon: Settings },
+  { label: 'Automações', to: '/automacoes', icon: Zap },
+  { label: 'Histórico', to: '/historico-execucoes', icon: History },
 ];
+
+const preferenceItems: NavigationItem[] = [
+  { label: 'Configurações', to: '/configuracoes', icon: Settings2 },
+];
+
+const allItems = [...mainItems, ...preferenceItems];
 
 export default function AppLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const { sidebarCollapsed: collapsed, update } = useSettings();
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const currentLabel =
+    allItems.find((item) =>
+      item.end
+        ? location.pathname === item.to
+        : location.pathname.startsWith(item.to),
+    )?.label ?? 'Página não encontrada';
+
+  const results = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    if (!term) return allItems;
+    return allItems.filter((item) => item.label.toLowerCase().includes(term));
+  }, [query]);
+
+  function closeSearch() {
+    setSearchOpen(false);
+    setQuery('');
+  }
+
+  function goTo(to: string) {
+    navigate(to);
+    closeSearch();
+    setSidebarOpen(false);
+  }
+
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setSearchOpen(true);
+      }
+      if (event.key === 'Escape') {
+        setSearchOpen(false);
+        setQuery('');
+        setNotificationsOpen(false);
+      }
+    }
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  useEffect(() => {
+    if (searchOpen) searchInputRef.current?.focus();
+  }, [searchOpen]);
+
+  const closeMobile = () => setSidebarOpen(false);
+
+  function renderLink({ label, to, icon: Icon, end }: NavigationItem) {
+    return (
+      <NavLink
+        key={to}
+        to={to}
+        end={end}
+        title={collapsed ? label : undefined}
+        className={({ isActive }) =>
+          `nav-link ${isActive ? 'nav-link-active' : ''}`
+        }
+        onClick={closeMobile}
+      >
+        <Icon size={18} />
+        <span>{label}</span>
+      </NavLink>
+    );
+  }
 
   return (
-    <div className={`mfds-shell ${collapsed ? 'mfds-collapsed' : ''}`}>
+    <div className={`app-shell ${collapsed ? 'app-shell-collapsed' : ''}`}>
       {sidebarOpen && (
         <button
-          className="mfds-backdrop"
+          className="mobile-backdrop"
           aria-label="Fechar menu"
-          onClick={() => setSidebarOpen(false)}
+          onClick={closeMobile}
         />
       )}
 
-      <aside className={`mfds-sidebar ${sidebarOpen ? 'mfds-sidebar-open' : ''}`}>
-        <div className="mfds-brand">
-          <div className="mfds-brand-mark">
-            <Activity size={22} />
-          </div>
+      <aside className={`sidebar ${sidebarOpen ? 'sidebar-open' : ''}`}>
+        <NavLink className="brand" to="/" end onClick={closeMobile}>
+          <span className="brand-mark">
+            <NexoraMark size={40} />
+          </span>
+          <span className="brand-copy">
+            <strong>Nexora</strong>
+            <span>Seu trabalho. Em movimento.</span>
+          </span>
+        </NavLink>
 
-          <div className="mfds-brand-text">
-            <strong>MFDS</strong>
-            <span>Workspace</span>
-          </div>
-
-          <button
-            className="mfds-icon-button mfds-mobile-close"
-            aria-label="Fechar menu"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <X size={19} />
-          </button>
+        <div className="workspace-switcher">
+          <span className="workspace-avatar">M</span>
+          <span className="workspace-info">
+            <strong>Meu workspace</strong>
+            <small>Plano de desenvolvimento</small>
+          </span>
         </div>
 
-        <div className="mfds-workspace-label">WORKSPACE</div>
-
-        <nav className="mfds-navigation" aria-label="Navegação principal">
-          {navigationItems.map(({ label, to, icon: Icon, end }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={end}
-              title={collapsed ? label : undefined}
-              className={({ isActive }) =>
-                `mfds-nav-link ${isActive ? 'mfds-nav-active' : ''}`
-              }
-              onClick={() => setSidebarOpen(false)}
-            >
-              <Icon size={19} strokeWidth={1.8} />
-              <span className="mfds-nav-label">{label}</span>
-            </NavLink>
-          ))}
+        <div className="nav-section-label">WORKSPACE</div>
+        <nav className="main-nav" aria-label="Navegação principal">
+          {mainItems.map(renderLink)}
         </nav>
 
-        <div className="mfds-sidebar-bottom">
-          <div className="mfds-plan-card">
-            <div className="mfds-plan-icon">
-              <Activity size={17} />
-            </div>
-            <div className="mfds-plan-text">
-              <strong>Seu espaço de trabalho</strong>
-              <span>Organize seus projetos</span>
-            </div>
-          </div>
+        <div className="nav-section-label tools-label">PREFERÊNCIAS</div>
+        <nav className="main-nav" aria-label="Preferências">
+          {preferenceItems.map(renderLink)}
+        </nav>
 
-          <button
-            className="mfds-collapse-button"
-            onClick={() => setCollapsed((value) => !value)}
-            aria-label={collapsed ? 'Expandir menu' : 'Recolher menu'}
-          >
-            {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-            {!collapsed && <span>Recolher menu</span>}
-          </button>
+        <div className="sidebar-spacer" />
+
+
+        <button
+          className="nav-link sidebar-collapse"
+          onClick={() => update('sidebarCollapsed', !collapsed)}
+          aria-label={collapsed ? 'Expandir menu' : 'Recolher menu'}
+        >
+          {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+          <span>Recolher menu</span>
+        </button>
+
+        <div className="profile-row">
+          <div className="profile-avatar">MF</div>
+          <div className="profile-copy">
+            <strong>Meu perfil</strong>
+            <span>Espaço pessoal</span>
+          </div>
         </div>
       </aside>
 
-      <div className="mfds-main">
-        <header className="mfds-topbar">
-          <div className="mfds-topbar-left">
+      <main className="main-area">
+        <header className="topbar">
+          <div className="topbar-left">
             <button
-              className="mfds-icon-button mfds-mobile-menu"
+              className="icon-button mobile-menu-button"
               aria-label="Abrir menu"
               onClick={() => setSidebarOpen(true)}
             >
-              <Menu size={21} />
+              <Menu size={20} />
             </button>
-
-            <div className="mfds-breadcrumb">
-              <span>Workspace</span>
-              <span className="mfds-breadcrumb-separator">/</span>
-              <span className="mfds-breadcrumb-current">
-                MFDS
-              </span>
+            <div className="breadcrumb">
+              Workspace <span>/</span> <strong>{currentLabel}</strong>
             </div>
           </div>
 
-          <div className="mfds-topbar-right">
-            <span className="mfds-environment">
-              <span className="mfds-status-dot" />
-              Ambiente de desenvolvimento
-            </span>
-
+          <div className="topbar-actions">
             <button
-              className="mfds-icon-button"
-              aria-label="Notificações demonstrativas"
-              title="Notificações demonstrativas"
+              className={`search-button ${searchOpen ? 'search-button-active' : ''}`}
+              onClick={() => (searchOpen ? closeSearch() : setSearchOpen(true))}
             >
-              <Bell size={19} />
+              <Search size={17} />
+              <span>Buscar</span>
+              <kbd>Ctrl K</kbd>
             </button>
 
-            <div className="mfds-avatar" title="Perfil demonstrativo">
-              MF
+            <div className="notification-wrap">
+              <button
+                className="icon-button notification-button"
+                aria-label="Notificações"
+                aria-expanded={notificationsOpen}
+                onClick={() => setNotificationsOpen((value) => !value)}
+              >
+                <Bell size={19} />
+              </button>
+              {notificationsOpen && (
+                <div className="notification-popover" role="status">
+                  Nenhuma notificação por enquanto.
+                </div>
+              )}
             </div>
+
+            <div className="topbar-avatar">MF</div>
           </div>
         </header>
 
-        <main className="mfds-content">
-          <Outlet />
-        </main>
+        {searchOpen && (
+          <>
+            <div className="search-panel">
+              <Search size={18} />
+              <input
+                ref={searchInputRef}
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' && results[0]) goTo(results[0].to);
+                }}
+                placeholder="Ir para uma página..."
+                aria-label="Ir para uma página"
+              />
+              <button
+                className="icon-button"
+                aria-label="Fechar busca"
+                onClick={closeSearch}
+              >
+                <X size={17} />
+              </button>
+            </div>
 
-        <footer className="mfds-footer">
-          <span>MFDS Workspace</span>
-          <span>Versão inicial · Sprint 1</span>
-        </footer>
-      </div>
+            <ul className="search-results">
+              {results.map(({ label, to, icon: Icon }) => (
+                <li key={to}>
+                  <button onClick={() => goTo(to)}>
+                    <Icon size={16} />
+                    {label}
+                  </button>
+                </li>
+              ))}
+              {results.length === 0 && (
+                <li className="search-empty">Nenhuma página encontrada.</li>
+              )}
+            </ul>
+          </>
+        )}
+
+        <div
+          key={location.pathname}
+          className={`route-fade ${location.pathname === '/' ? '' : 'page-area'}`.trim()}
+        >
+          <Outlet />
+        </div>
+      </main>
     </div>
   );
 }
